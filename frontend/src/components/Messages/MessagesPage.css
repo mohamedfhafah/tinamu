@@ -19,12 +19,31 @@
 .conversations-header {
   padding: 20px 24px;
   border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .conversations-header h2 {
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--color-text);
+}
+
+.btn-new-group {
+  padding: 6px 14px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-new-group:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.05);
 }
 
 .conversations-search {

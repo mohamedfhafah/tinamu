@@ -19,6 +19,7 @@ import {
     offNewMessage,
     disconnectSocket,
 } from '../../services/socketService';
+import CreateGroupModal from './CreateGroupModal';
 import './MessagesPage.css';
 
 function MessagesPage() {
@@ -26,6 +27,7 @@ function MessagesPage() {
     const { conversations, activeConversation, messages, loading } = useSelector(s => s.messaging);
     const [newMsg, setNewMsg] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [showCreateGroup, setShowCreateGroup] = useState(false);
     const messagesEndRef = useRef(null);
 
     // Charger les conversations au montage
@@ -101,6 +103,9 @@ function MessagesPage() {
             <aside className="conversations-panel">
                 <div className="conversations-header">
                     <h2>Messages</h2>
+                    <button className="btn-new-group" onClick={() => setShowCreateGroup(true)}>
+                        + Groupe
+                    </button>
                 </div>
 
                 <div className="conversations-search">
@@ -191,6 +196,10 @@ function MessagesPage() {
                     </>
                 )}
             </main>
+
+            {showCreateGroup && (
+                <CreateGroupModal onClose={() => setShowCreateGroup(false)} />
+            )}
         </div>
     );
 }
