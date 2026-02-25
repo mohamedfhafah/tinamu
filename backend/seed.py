@@ -16,6 +16,12 @@ load_dotenv()
 from app import create_app, db, bcrypt
 from app.models.user import User, NiveauEnum
 from app.models.follow import Follow
+from app.models.conversation import Conversation, ConversationMember
+from app.models.message import Message
+from app.services.conversation_service import (
+    create_general_conversation,
+    add_user_to_general_conversation,
+)
 
 app = create_app()
 
@@ -86,6 +92,9 @@ STUDENTS = [
 
 with app.app_context():
     print("🗑️  Nettoyage de la base de données...")
+    Message.query.delete()
+    ConversationMember.query.delete()
+    Conversation.query.delete()
     Follow.query.delete()
     User.query.delete()
     db.session.commit()
@@ -128,6 +137,16 @@ with app.app_context():
     db.session.commit()
     print(f"✅ {len(pairs)} relations follow créées.")
 
+    print("💬 Création des conversations générales (L1→M2)...")
+    for niveau in ["L1", "L2", "L3", "M1", "M2"]:
+        conv = create_general_conversation(niveau)
+        print(f"   ✅ {niveau} — Conversation #{conv.id}")
+
+    print("🔗 Auto-join des étudiants dans leur conversation de niveau...")
+    for user in users:
+        add_user_to_general_conversation(user.id, user.niveau.value)
+    print(f"   ✅ {len(users)} étudiants ajoutés à leur conversation.")
+
     print("\n" + "=" * 55)
     print("🎉 Seed terminé avec succès !")
     print(f"   Mot de passe commun : {PASSWORD}")
@@ -135,3 +154,4 @@ with app.app_context():
     for s in STUDENTS:
         print(f"   • [{s['student_id']}] {s['prenom']} {s['nom']} ({s['niveau']})")
     print("=" * 55)
+
