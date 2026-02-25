@@ -10,7 +10,7 @@ export default function ErrorPage() {
                 <div className="error-code">⚠️</div>
                 <h1>Une erreur est survenue</h1>
                 <p>Quelque chose s'est mal passé. Réessaie ou retourne à l'accueil.</p>
-                {error?.message && (
+                {error && error.message && (
                     <div className="error-detail">{error.message}</div>
                 )}
                 <Link to="/" className="btn-home">Retour à l'accueil</Link>
