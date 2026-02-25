@@ -1,5 +1,5 @@
 .app-layout {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     background: var(--color-bg);
@@ -8,6 +8,7 @@
 .app-body {
     display: flex;
     flex: 1;
+    overflow: hidden;
 }
 
 .app-content {

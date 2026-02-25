@@ -26,7 +26,8 @@ def create_app():
     jwt.init_app(app)
     bcrypt.init_app(app)
     CORS(app, resources={r"/api/*": {"origins": app.config["CORS_ORIGINS"]}})
-    socketio.init_app(app, cors_allowed_origins="*", async_mode="eventlet")
+    # threading = compatible Python 3.13+ (eventlet ne l'est pas)
+    socketio.init_app(app, cors_allowed_origins="*", async_mode="threading")
 
     # Import modèles — nécessaire pour que Flask-Migrate les détecte
     from app.models import user, follow, quiz, question, quiz_result  # noqa: F401 (M2)
@@ -35,9 +36,22 @@ def create_app():
     # Import socket events
     from app.sockets import messaging_events  # noqa: F401
 
+    # JWT blacklist — vérifie chaque token entrant (M1)
+    from app.services.auth_service import is_token_revoked
+
+    @jwt.token_in_blocklist_loader
+    def check_if_token_revoked(_jwt_header, jwt_payload):
+        return is_token_revoked(jwt_payload)
+
+    # JWT error handlers (M1)
+    from app.routes.auth import register_jwt_error_handlers
+    register_jwt_error_handlers(jwt)
+
     # Blueprints
+    from app.routes.auth import auth_bp
     from app.routes.messaging import messaging_bp
     from app.routes.search import search_bp
+    app.register_blueprint(auth_bp)
     app.register_blueprint(messaging_bp, url_prefix='/api')
     app.register_blueprint(search_bp, url_prefix='/api')
 
