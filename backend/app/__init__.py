@@ -29,6 +29,6 @@ def create_app():
     socketio.init_app(app, cors_allowed_origins="*", async_mode="eventlet")
 
     # Import modèles — nécessaire pour que Flask-Migrate les détecte
-    from app.models import user, follow  # noqa: F401
+    from app.models import user, follow, quiz, question, quiz_result  # noqa: F401
 
     return app
