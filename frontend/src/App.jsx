@@ -6,6 +6,7 @@ import SearchPage from './components/Search/SearchPage';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import NotFound from './pages/NotFound/NotFound';
+import Feed from './pages/Feed/Feed';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 /**
@@ -41,7 +42,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to="/feed" replace />} />
-            <Route path="/feed" element={<div>Feed — à implémenter (M1)</div>} />
+            <Route path="/feed" element={<Feed />} />
             <Route path="/quiz" element={<div>Quiz — à implémenter (M2)</div>} />
             <Route path="/resources" element={<div>Ressources — à implémenter (M2)</div>} />
             <Route path="/messages" element={<MessagesPage />} />

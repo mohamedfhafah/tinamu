@@ -32,6 +32,7 @@ def create_app():
     # Import modèles — nécessaire pour que Flask-Migrate les détecte
     from app.models import user, follow, quiz, question, quiz_result  # noqa: F401 (M2)
     from app.models import conversation, message  # noqa: F401 (M3)
+    from app.models import post, swipe, match  # noqa: F401 (M1 — Feed)
 
     # Import socket events
     from app.sockets import messaging_events  # noqa: F401
@@ -51,7 +52,9 @@ def create_app():
     from app.routes.auth import auth_bp
     from app.routes.messaging import messaging_bp
     from app.routes.search import search_bp
+    from app.routes.feed import feed_bp
     app.register_blueprint(auth_bp)
+    app.register_blueprint(feed_bp)
     app.register_blueprint(messaging_bp, url_prefix='/api')
     app.register_blueprint(search_bp, url_prefix='/api')
 
