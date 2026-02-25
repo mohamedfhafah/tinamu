@@ -35,4 +35,10 @@ def create_app():
     # Import socket events
     from app.sockets import messaging_events  # noqa: F401
 
+    # Blueprints
+    from app.routes.messaging import messaging_bp
+    from app.routes.search import search_bp
+    app.register_blueprint(messaging_bp, url_prefix='/api')
+    app.register_blueprint(search_bp, url_prefix='/api')
+
     return app

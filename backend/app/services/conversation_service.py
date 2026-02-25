@@ -94,6 +94,63 @@ def is_member(conversation_id, user_id):
     ).first() is not None
 
 
+def is_admin(conversation_id, user_id):
+    """Vérifier si un utilisateur est admin d'une conversation."""
+    member = ConversationMember.query.filter_by(
+        conversation_id=conversation_id, user_id=user_id
+    ).first()
+    return member and member.role == MemberRole.ADMIN
+
+
+def create_group_conversation(creator_id, nom, member_ids):
+    """Créer un groupe personnel.
+
+    Args:
+        creator_id (str): UUID du créateur (sera ADMIN)
+        nom (str): Nom du groupe
+        member_ids (list[str]): UUIDs des membres
+    """
+    conv = Conversation(
+        type=ConversationType.GROUPE_PERSO,
+        nom=nom,
+        created_by=creator_id
+    )
+    db.session.add(conv)
+    db.session.flush()
+
+    db.session.add(ConversationMember(
+        conversation_id=conv.id, user_id=creator_id, role=MemberRole.ADMIN
+    ))
+    for uid in member_ids:
+        if uid != creator_id:
+            db.session.add(ConversationMember(
+                conversation_id=conv.id, user_id=uid, role=MemberRole.MEMBRE
+            ))
+
+    db.session.commit()
+    return conv
+
+
+def get_user_conversations(user_id):
+    """Récupérer toutes les conversations d'un utilisateur."""
+    memberships = ConversationMember.query.filter_by(user_id=user_id).all()
+    conv_ids = [m.conversation_id for m in memberships]
+
+    conversations = Conversation.query.filter(
+        Conversation.id.in_(conv_ids)
+    ).all()
+
+    result = []
+    for conv in conversations:
+        result.append(conv.to_dict(include_members=True, include_last_message=True))
+
+    result.sort(
+        key=lambda c: c.get('last_message', {}).get('created_at', '') if c.get('last_message') else '',
+        reverse=True
+    )
+    return result
+
+
 def _find_private_conversation(user1_id, user2_id):
     """Trouver une conversation privée existante entre deux utilisateurs."""
     user1_convs = db.session.query(
