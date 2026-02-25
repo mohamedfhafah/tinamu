@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import MessagesPage from './components/Messages/MessagesPage';
+import SearchPage from './components/Search/SearchPage';
 
 /**
  * App — Configuration du routing principal.
@@ -30,8 +32,8 @@ function App() {
             <Route path="/feed" element={<div>Feed — à implémenter</div>} />
             <Route path="/quiz" element={<div>Quiz — à implémenter</div>} />
             <Route path="/resources" element={<div>Ressources — à implémenter</div>} />
-            <Route path="/messages" element={<div>Messages — à implémenter</div>} />
-            <Route path="/search" element={<div>Recherche — à implémenter</div>} />
+            <Route path="/messages" element={<MessagesPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/profile" element={<div>Profil — à implémenter</div>} />
           </Route>
         </Route>
