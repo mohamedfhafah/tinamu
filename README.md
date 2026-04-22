@@ -69,6 +69,21 @@ npm install
 npm run dev
 ```
 
+## Verification
+
+Backend sanity check:
+
+```bash
+python3 -m compileall backend/app backend/run.py backend/config.py backend/seed.py
+```
+
+Frontend production build:
+
+```bash
+cd frontend
+npm run build
+```
+
 ## Configuration
 
 The repository ships only with `backend/.env.example`.
@@ -93,58 +108,3 @@ Do not commit local environment files.
 - This repository is a student product prototype, not a production deployment.
 - Sensitive configuration has been moved out of tracked files.
 - `backend/API.md` documents the API surface in more detail.
-| **J3** | Seed data réaliste pour la démo |
-| **J4** | Répétition de la démo |
-| **J5** | 🎯 **Démo finale** |
-
----
-
-## 🔑 Règles de coordination
-
-### 1. Modèles partagés
-Le modèle `User` est utilisé par tout le monde. **Convention** :
-- M1 est "propriétaire" du modèle `User` (il fait les migrations)
-- Si un autre membre a besoin d'ajouter un champ → il fait une MR que M1 review
-
-### 2. Services partagés
-Chaque membre expose des **fonctions de service** réutilisables :
-```
-backend/app/services/
-├── auth_service.py         # M1
-├── feed_service.py         # M1
-├── quiz_service.py         # M2
-├── resource_service.py     # M2
-├── conversation_service.py # M3
-├── message_service.py      # M3
-├── search_service.py       # M4
-├── profile_service.py      # M4
-```
-
-### 3. Convention de branches
-```
-main
-├── setup/flask-config       (M1, Sprint 1 Sem 1)
-├── setup/react-config       (M2, Sprint 1 Sem 1)
-├── feature/auth             (M1)
-├── feature/feed-tinder      (M1)
-├── feature/quiz             (M2)
-├── feature/resources        (M2)
-├── feature/messaging        (M3)
-├── feature/search           (M4)
-├── feature/profile          (M4)
-└── feature/docker           (M4)
-```
-
-### 4. Merge quotidien
-> Chaque soir, chaque membre merge `main` dans sa branche pour éviter les conflits massifs.
-
----
-
-## 👥 Membres
-
-| Membre | Rôle |
-|--------|------|
-| M1 | Auth + Feed Tinder |
-| M2 | Quiz + Ressources |
-| M3 | Messagerie + Recherche |
-| M4 | Profil + UI/UX + DevOps |
