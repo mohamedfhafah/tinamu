@@ -10,6 +10,10 @@ TinAMU is a university social platform prototype for computer-science students. 
 - Quiz and learning-oriented interactions
 - Shared resources for the university community
 
+## Configuration
+
+Runtime secrets are expected to come from environment variables. For local development, copy `backend/.env.example` to `backend/.env`, set your values, and start the backend with explicit credentials rather than relying on static secrets committed in code.
+
 ## Tech stack
 
 | Layer | Technologies |
