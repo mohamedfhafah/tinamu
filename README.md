@@ -20,7 +20,7 @@ Runtime secrets are expected to come from environment variables. For local devel
 | --- | --- |
 | Frontend | React, Vite, Redux Toolkit, React Router, Axios |
 | Backend | Flask, Flask-JWT-Extended, Flask-SQLAlchemy, Flask-Migrate, Flask-SocketIO |
-| Database | PostgreSQL |
+| Database | SQLite by default, PostgreSQL optional |
 | Realtime | Socket.IO |
 
 ## Repository layout
@@ -52,13 +52,20 @@ tinamu/
 
 ```bash
 cd backend
-python -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-flask db upgrade
 python seed.py
-flask run
+python run.py
+```
+
+The local demo now boots on SQLite without provisioning PostgreSQL.
+
+If you explicitly want PostgreSQL, install the optional adapter too:
+
+```bash
+pip install -r requirements-postgres.txt
 ```
 
 ### Frontend
@@ -105,6 +112,6 @@ Do not commit local environment files.
 
 ## Notes
 
-- This repository is a student product prototype, not a production deployment.
+- This repository is a functional student product demo, not a production deployment.
 - Sensitive configuration has been moved out of tracked files.
 - `backend/API.md` documents the API surface in more detail.

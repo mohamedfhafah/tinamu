@@ -26,9 +26,15 @@ def create_app():
     jwt.init_app(app)
     bcrypt.init_app(app)
     CORS(app, resources={r"/api/*": {"origins": app.config["CORS_ORIGINS"]}})
-    socketio.init_app(app, cors_allowed_origins="*", async_mode="eventlet")
+    socketio.init_app(app, cors_allowed_origins="*", async_mode="threading")
 
     # Import modèles — nécessaire pour que Flask-Migrate les détecte
     from app.models import user, follow  # noqa: F401
+    from app.routes import register_blueprints
+
+    register_blueprints(app)
+
+    with app.app_context():
+        db.create_all()
 
     return app

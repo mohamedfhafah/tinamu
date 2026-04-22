@@ -1,42 +1,25 @@
-/* ── TinAMU — Design System Variables ──────────────────────────────── */
-
 :root {
-  /* Couleurs principales */
-  --color-primary: #4f46e5;
-  --color-primary-light: rgba(79, 70, 229, 0.1);
-  --color-primary-dark: #3730a3;
-
-  /* Surfaces & Background */
-  --color-bg: #f8fafc;
-  --color-surface: #ffffff;
-  --color-hover: #f1f5f9;
-  --color-border: #e2e8f0;
-
-  /* Texte */
-  --color-text: #0f172a;
-  --color-text-secondary: #64748b;
-
-  /* États */
+  --color-primary: #1dd1a1;
+  --color-primary-light: rgba(29, 209, 161, 0.12);
+  --color-primary-strong: #0f766e;
+  --color-accent: #ffb547;
+  --color-bg: #eef4f5;
+  --color-surface: rgba(255, 255, 255, 0.92);
+  --color-panel: #f7fbfb;
+  --color-hover: #edf7f4;
+  --color-border: rgba(15, 118, 110, 0.12);
+  --color-text: #10222c;
+  --color-text-secondary: #5d7480;
   --color-success: #22c55e;
-  --color-warning: #f59e0b;
   --color-danger: #ef4444;
-  --color-danger-light: rgba(239, 68, 68, 0.1);
-
-  /* Typo */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-
-  /* Ombres */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
-
-  /* Radius */
+  --font-family: 'Avenir Next', 'Segoe UI', sans-serif;
+  --shadow-sm: 0 8px 20px rgba(16, 34, 44, 0.06);
+  --shadow-md: 0 18px 50px rgba(16, 34, 44, 0.08);
+  --shadow-lg: 0 32px 80px rgba(16, 34, 44, 0.12);
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-lg: 24px;
 }
-
-/* ── Reset & Base ──────────────────────────────────────────────────── */
 
 *,
 *::before,
@@ -48,10 +31,13 @@
 
 body {
   font-family: var(--font-family);
-  background: var(--color-bg);
+  background:
+    radial-gradient(circle at top, rgba(255, 181, 71, 0.14), transparent 30%),
+    linear-gradient(180deg, #eef4f5, #e6eff0 48%, #edf3f4);
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
 a {
@@ -64,14 +50,6 @@ button {
   cursor: pointer;
 }
 
-/* ── Placeholder pour pages non-implémentées ──────────────────────── */
-
-.page-placeholder {
-  padding: 1rem 1.25rem;
-  background: var(--color-hover);
-  border-radius: var(--radius-md);
-  color: var(--color-text-secondary);
-  font-style: italic;
-  text-align: center;
-  margin-top: 1rem;
+#root {
+  min-height: 100vh;
 }

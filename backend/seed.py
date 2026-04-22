@@ -85,6 +85,7 @@ STUDENTS = [
 ]
 
 with app.app_context():
+    db.create_all()
     print("🗑️  Nettoyage de la base de données...")
     Follow.query.delete()
     User.query.delete()
